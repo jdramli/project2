@@ -44,12 +44,15 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void drawSomething(){
-        Canvas canvas = surfaceHolder.lockCanvas();
-        Paint paint = new Paint();
-        canvas.drawRect(0, 0, this.getWidth(), this.getHeight(), paint);
-        canvas.drawLine(5,5,23,92,paint);
+        surfaceHolder = getHolder();
+        {
+            Canvas canvas = surfaceHolder.lockCanvas();
+            Paint paint = new Paint(Color.RED);
+            canvas.drawRect(0, 0, this.getWidth(), this.getHeight(), paint);
+            canvas.drawLine(5, 5, 23, 92, paint);
 
-        surfaceHolder.unlockCanvasAndPost(canvas);
+            surfaceHolder.unlockCanvasAndPost(canvas);
+        }
     }
 
     /* This method will be invoked to draw a circle in canvas. */

@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
     MySurface testsurface;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,12 +31,17 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         //sets buttons and layout handle
         final Button upbutton = findViewById((R.id.upbutton));
         Button downbutton = findViewById((R.id.downbutton));
-        final ConstraintLayout c_layout = (ConstraintLayout)findViewById(R.id.constraintLayout);
+        ConstraintLayout c_layout = (ConstraintLayout)findViewById(R.id.constraintLayout);
+        c_layout.setBackgroundColor(Color.GRAY);
 
         testsurface = new MySurface((getApplicationContext()));
+
+        testsurface.setBackgroundColor(Color.BLUE);
+        testsurface.getHolder().setFixedSize(500,500);
         testsurface.setOnTouchListener(this);
-        //testsurface.drawSomething();
         c_layout.addView(testsurface);
+        // testsurface.drawSomething();
+
         upbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,10 +49,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 //draw an object
                 Paint paint = new Paint();
                 paint.setColor(Color.RED);
-                testsurface.setPaint(paint);
+                //testsurface.setPaint(paint);
+                // testsurface.drawSomething();
+                testsurface.drawBall();
 
             }
         });
+
     }
 
     @Override
