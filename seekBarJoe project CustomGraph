@@ -1,0 +1,181 @@
+package com.example.seekbarjoe;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+
+import java.util.Random;
+
+public class CustomGraph extends SurfaceView implements SurfaceHolder.Callback {
+
+    public SurfaceHolder surfaceHolder = null;
+    private Paint paint = null;
+    private float x, y; //these hold the coordinate pair that will be used to position the drawing of each object.
+    private float m = 1; //the m that will be used to calculate "y = mx + b"
+    private float b = 0; //the b that will be used to calculate the "y = mx + b"
+    Canvas c_canvas = null;
+
+    public CustomGraph(Context context){
+        super(context);
+        paint = new Paint();
+        paint.setColor(Color.RED);
+    }
+    @Override
+    protected void onDraw(Canvas canvas){
+        super.onDraw(canvas);
+        int x = 50;
+        int y = 50;
+        int radius = 40;
+        Paint paint = new Paint();
+        paint.setColor(Color.BLUE);
+        canvas.drawCircle(400,400,radius, paint);
+    }
+
+    public Canvas getCanvas(){
+        return this.c_canvas;
+    }
+
+
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        paint = null;
+    }
+
+    public void drawEquation(){
+        surfaceHolder = getHolder();
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Paint surfaceBackground = new Paint();
+        surfaceBackground.setColor(Color.LTGRAY);
+        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
+        paint.setColor(Color.BLUE);
+        //canvas.drawLine(this.x,this.y,this.x+100,this.y+100,surfaceBackground);
+        float startx = 0;
+        float starty = m*startx + b;
+        float endx = this.makeRandX();
+        float endy = endx*m + b;
+
+        canvas.drawLine(startx,starty, endx,endy,paint);
+        surfaceHolder.unlockCanvasAndPost(canvas);
+
+    }
+
+    public void drawRandomLine(){
+        surfaceHolder = getHolder();
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Paint surfaceBackground = new Paint();
+        surfaceBackground.setColor(Color.LTGRAY);
+        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
+        paint.setColor(Color.BLUE);
+        //canvas.drawLine(this.x,this.y,this.x+100,this.y+100,surfaceBackground);
+        canvas.drawLine(this.makeRandX(),this.makeRandY(),this.makeRandX(),this.makeRandY(),paint);
+        surfaceHolder.unlockCanvasAndPost(canvas);
+    }
+
+    public void drawGreen(){
+        surfaceHolder = getHolder();
+        //Get and lock canvas object from surfaceHolder
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Paint surfaceBackground = new Paint();
+        //Set the surfaceview background color
+        surfaceBackground.setColor(Color.LTGRAY);
+        //Draw the surfacview background color
+        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
+
+        //Draw the circle
+        paint.setColor(Color.GREEN);
+        canvas.drawCircle(x,y,100,paint);
+
+        //Unlock the canvas object and post the new draw.
+        surfaceHolder.unlockCanvasAndPost(canvas);
+
+    }
+    public void drawYellow(){
+        surfaceHolder = getHolder();
+        //Get and lock canvas object from surfaceHolder
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Paint surfaceBackground = new Paint();
+        //Set the surfaceview background color
+        surfaceBackground.setColor(Color.BLUE);
+        //Draw the surfacview background color
+        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
+
+        //Draw the circle
+        paint.setColor(Color.YELLOW);
+        canvas.drawCircle(x,y,100,paint);
+
+        //Unlock the canvas object and post the new draw.
+        surfaceHolder.unlockCanvasAndPost(canvas);
+
+    }
+    public void drawRed(){
+        surfaceHolder = getHolder();
+        //Get and lock canvas object from surfaceHolder
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Paint surfaceBackground = new Paint();
+        //Set the surfaceview background color
+        surfaceBackground.setColor(Color.BLACK);
+        //Draw the surfacview background color
+        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
+
+        //Draw the circle
+        paint.setColor(Color.RED);
+        canvas.drawCircle(x,y,100,paint);
+
+        //Unlock the canvas object and post the new draw.
+        surfaceHolder.unlockCanvasAndPost(canvas);
+    }
+    public void setX(float x){
+        //this.x = (float) (0.01 * x * this.getWidth());
+        //Random float_rand = new Random();
+        //Random int_rand = new Random();
+        //this.x = float_rand.nextFloat() + int_rand.nextInt(this.getWidth());
+        this.x = x;
+    }
+    public void setY(float y){
+        //this.y = (float) (0.01 * y * this.getHeight());
+        //Random float_rand = new Random();
+        //Random int_rand = new Random();
+        //this.y = float_rand.nextFloat() + int_rand.nextInt(this.getHeight());
+        this.y = y;
+        System.out.println(this.y);
+    }
+    public void randX(){
+        //this.x = (float) (0.01 * x * this.getWidth());
+        Random float_rand = new Random();
+        Random int_rand = new Random();
+        this.x = float_rand.nextFloat() + int_rand.nextInt(this.getWidth());
+    }
+    public void randY(){
+        //this.y = (float) (0.01 * y * this.getHeight());
+        Random float_rand = new Random();
+        Random int_rand = new Random();
+        this.y = float_rand.nextFloat() + int_rand.nextInt(this.getHeight());
+        System.out.println(this.y);
+    }
+
+    public float makeRandX(){
+        Random float_rand = new Random();
+        Random int_rand = new Random();
+        return float_rand.nextFloat() + int_rand.nextInt(getWidth());
+    }
+    public float makeRandY(){
+        Random float_rand = new Random();
+        Random int_rand = new Random();
+        return float_rand.nextFloat() + int_rand.nextInt(getHeight());
+    }
+
+
+}

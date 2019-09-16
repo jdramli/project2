@@ -1,0 +1,81 @@
+package com.example.seekbarjoe;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.SurfaceView;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
+    private SeekBar seekBar = null;
+    private CustomGraph customGraph = null;
+    @Override
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        //creates the base layout (i.e. your screen background that will hold your other views/object
+        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.customViewLayout);
+        //creates the surfaceview object (it is a surface view because it is the class name that has been user defined
+        //and extends the surfaceview class, and also impoelments the surfaceHolder class
+        customGraph = new CustomGraph((getApplicationContext()));
+        layout.addView(customGraph);
+        customGraph.getHolder().setFixedSize(700, 700);
+
+        seekBar = (SeekBar)findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            //parameters progress and fromUser seem to be predefined based on the seekBar widget and android OS input/output interface
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                customGraph.randX();
+                customGraph.randY();
+                customGraph.drawRed();
+                customGraph.drawGreen();
+                //customGraph.drawYellow();
+                //customGraph.draw(customGraph.getCanvas());
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                customGraph.setX(300);
+                customGraph.setY(300);
+                customGraph.drawYellow();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                //customGraph.setX(300);
+                //customGraph.setY(300);
+                //customGraph.drawYellow();
+                customGraph.randX();
+                customGraph.randY();
+                //customGraph.drawRandomLine();
+                customGraph.drawEquation();
+
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if(view instanceof SurfaceView){
+            if(motionEvent.getAction() == MotionEvent.ACTION_POINTER_DOWN){
+
+                customGraph.setX(100);
+                customGraph.setY(100);
+                customGraph.drawYellow();
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+}
