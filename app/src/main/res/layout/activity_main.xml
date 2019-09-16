@@ -13,10 +13,16 @@
         android:layout_height="match_parent"
         android:foregroundGravity="bottom"
         android:orientation="horizontal"
-        app:layout_anchorGravity="bottom|center"
-        app:layout_constraintEnd_toEndOf="@+id/upbutton"
-        app:layout_constraintStart_toEndOf="@+id/upbutton">
+        app:layout_anchorGravity="bottom|center">
 
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="48dp"
+            android:startColor="#ff555555"
+            app:layout_constraintBottom_toTopOf="@+id/upbutton"
+            tools:layout_editor_absoluteX="0dp" />
 
         <Button
             android:id="@+id/upbutton"
