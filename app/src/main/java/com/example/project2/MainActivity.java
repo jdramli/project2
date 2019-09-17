@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         //testsurface.setBackgroundColor(Color.WHITE);
         //testsurface.getHolder().setFixedSize(900,900);
         //testsurface.setOnTouchListener(this);
+        //setContentView(testsurface);
 
         // testsurface.drawSomething();
         seekBar = (SeekBar)findViewById(R.id.seekBar);
@@ -45,14 +46,15 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 //testsurface.drawRed();
                 //downbutton.setText("Position on Seekbar has changed!");
                 float position = progress*10;
-                //testsurface.drawEquation(position);
-                testsurface.drawInverseEquation(position);
+                testsurface.drawEquation(position);
+                downbutton.setText("Equation from 0 to " + progress + " has been written");
+                //testsurface.drawInverseEquation(position);
 
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                downbutton.setText("You started tracking on the seekbar!");
+                //downbutton.setText("You started tracking on the seekbar!");
                 //testsurface.randX();
                 //testsurface.randY();
                 //testsurface.drawMiddle();
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
-                downbutton.setText("SeekBar Tracking Stopped now!");
+                //downbutton.setText("SeekBar Tracking Stopped now!");
 
             }
         });
@@ -71,12 +73,20 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         upbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                upbutton.setText("button clicked successfully!");
-
-                testsurface.drawMiddle();
+                upbutton.setText("Click to increase power by 1, current power is: "+testsurface.getPower());
+                testsurface.increasePower();
+                //testsurface.drawMiddle();
                 //testsurface.drawBall();
 
             }
+        });
+        downbutton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                testsurface.drawEquation(testsurface.makeRandX());
+                downbutton.setText("Equation 0 to random_number_x has been drawn! (Click again to redraw)");
+            }
+
         });
 
     }

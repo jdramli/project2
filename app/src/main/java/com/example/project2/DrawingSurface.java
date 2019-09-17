@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.util.Random;
+import java.lang.Math;
 
 public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -15,6 +16,8 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     private float x, y; //will hold the x and y cooridnates of the drawn object in each method
     private float m = 1;
     private float b = 0;
+    private int power = 1;
+    private int[][] equation = null;
 
 
     public DrawingSurface(Context context){
@@ -37,6 +40,10 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         paint = null;
     }
+
+    public void increasePower(){
+        this.power++;
+    }
     public void drawEquation(float user_x){
         surfaceHolder = getHolder();
         Canvas canvas = surfaceHolder.lockCanvas();
@@ -49,9 +56,19 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         float startx = 0;
         float starty = m*startx + b;
         float endx = user_x;
-        float endy = endx*m + b;
-
+        float endy = (float) (Math.pow(endx,power)*m + b);
         canvas.drawLine(startx,starty, endx,endy,paint);
+
+        for(int i = 0; i < user_x; i++){
+            startx = i;
+            starty = m*startx + b;
+            endx = i++;
+            endy = (float) (Math.pow(endx,power)*m + b);
+            paint.setColor(Color.YELLOW);
+            canvas.drawLine(startx,starty, endx,endy,paint);
+        }
+
+
         surfaceHolder.unlockCanvasAndPost(canvas);
 
     }
@@ -67,7 +84,7 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         float startx = 0;
         float starty = this.getHeight() - b;
         float endx = user_x;
-        float endy = -m*endx - b;
+        float endy = -(m*endx + b);
 
         canvas.drawLine(startx,starty, endx,endy,paint);
         surfaceHolder.unlockCanvasAndPost(canvas);
@@ -162,6 +179,10 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         Random float_rand = new Random();
         Random int_rand = new Random();
         return float_rand.nextFloat() + int_rand.nextInt(getHeight());
+    }
+
+    public int getPower(){
+        return this.power;
     }
 }
 
