@@ -25,14 +25,14 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         //sets buttons and layout handle
         final Button upbutton = findViewById((R.id.upbutton));
-        Button downbutton = findViewById((R.id.downbutton));
+        final Button downbutton = findViewById((R.id.downbutton));
         c_layout = (ConstraintLayout)findViewById(R.id.constraintLayout);
         testsurface = new DrawingSurface((getApplicationContext()));
         c_layout.addView(testsurface);
         c_layout.setBackgroundColor(Color.GRAY);
         testsurface.setBackgroundColor(Color.WHITE);
         testsurface.getHolder().setFixedSize(900,900);
-        testsurface.setOnTouchListener(this);
+        //testsurface.setOnTouchListener(this);
 
         // testsurface.drawSomething();
         seekBar = (SeekBar)findViewById(R.id.seekBar);
@@ -45,16 +45,23 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 testsurface.drawRed();
                 //customGraph.drawGreen();
                 //customGraph.drawYellow();
+                //downbutton.setText("Position on Seekbar has changed!");
 
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                downbutton.setText("You started tracking on the seekbar!");
+
 
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                testsurface.randX();
+                testsurface.randY();
+                testsurface.drawMiddle();
+                downbutton.setText("SeekBar Tracking Stopped now!");
 
             }
         });

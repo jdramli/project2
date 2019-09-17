@@ -13,6 +13,8 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     public SurfaceHolder surfaceHolder = null;
     private Paint paint = null;
     private float x, y; //will hold the x and y cooridnates of the drawn object in each method
+    private float m = 1;
+    private float b = 0;
 
 
     public DrawingSurface(Context context){
@@ -35,6 +37,23 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         paint = null;
     }
+    public void drawEquation(){
+        surfaceHolder = getHolder();
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Paint surfaceBackground = new Paint();
+        surfaceBackground.setColor(Color.LTGRAY);
+        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
+        paint.setColor(Color.BLUE);
+        //canvas.drawLine(this.x,this.y,this.x+100,this.y+100,surfaceBackground);
+        float startx = 0;
+        float starty = m*startx + b;
+        float endx = this.makeRandX();
+        float endy = endx*m + b;
+
+        canvas.drawLine(startx,starty, endx,endy,paint);
+        surfaceHolder.unlockCanvasAndPost(canvas);
+
+    }
     public void drawMiddle(){
         surfaceHolder = getHolder();
         //Get and lock canvas object from surfaceHolder
@@ -47,8 +66,8 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
 
         //Draw the circle
         paint.setColor(Color.YELLOW);
-        this.x = 200;
-        this.y = 200;
+        //this.x = 200;
+        //this.y = 200;
         canvas.drawCircle(this.x, this.y,100,paint);
 
         //Unlock the canvas object and post the new draw.
@@ -100,6 +119,30 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         Random float_rand = new Random();
         Random int_rand = new Random();
         y = float_rand.nextFloat() + int_rand.nextInt(this.getHeight());
+    }
+
+    public void randX(){
+        //this.x = (float) (0.01 * x * this.getWidth());
+        Random float_rand = new Random();
+        Random int_rand = new Random();
+        this.x = float_rand.nextFloat() + int_rand.nextInt(this.getWidth());
+    }
+    public void randY(){
+        //this.y = (float) (0.01 * y * this.getHeight());
+        Random float_rand = new Random();
+        Random int_rand = new Random();
+        this.y = float_rand.nextFloat() + int_rand.nextInt(this.getHeight());
+        System.out.println(this.y);
+    }
+    public float makeRandX(){
+        Random float_rand = new Random();
+        Random int_rand = new Random();
+        return float_rand.nextFloat() + int_rand.nextInt(getWidth());
+    }
+    public float makeRandY(){
+        Random float_rand = new Random();
+        Random int_rand = new Random();
+        return float_rand.nextFloat() + int_rand.nextInt(getHeight());
     }
 }
 
