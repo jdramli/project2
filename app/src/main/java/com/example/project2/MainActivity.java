@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         testsurface = new DrawingSurface((getApplicationContext()));
         c_layout.addView(testsurface);
         c_layout.setBackgroundColor(Color.GRAY);
-        testsurface.setBackgroundColor(Color.WHITE);
-        testsurface.getHolder().setFixedSize(900,900);
+        //testsurface.setBackgroundColor(Color.WHITE);
+        //testsurface.getHolder().setFixedSize(900,900);
         //testsurface.setOnTouchListener(this);
 
         // testsurface.drawSomething();
@@ -40,27 +40,29 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             @Override
             //parameters progress and fromUser seem to be predefined based on the seekBar widget and android OS input/output interface
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                testsurface.setX(progress);
-                testsurface.setY(progress);
-                testsurface.drawRed();
-                //customGraph.drawGreen();
-                //customGraph.drawYellow();
+                //testsurface.setX(progress);
+                //testsurface.setY(progress);
+                //testsurface.drawRed();
                 //downbutton.setText("Position on Seekbar has changed!");
+                float position = progress*10;
+                //testsurface.drawEquation(position);
+                testsurface.drawInverseEquation(position);
 
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 downbutton.setText("You started tracking on the seekbar!");
+                //testsurface.randX();
+                //testsurface.randY();
+                //testsurface.drawMiddle();
 
 
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                testsurface.randX();
-                testsurface.randY();
-                testsurface.drawMiddle();
+
                 downbutton.setText("SeekBar Tracking Stopped now!");
 
             }
@@ -70,11 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             @Override
             public void onClick(View view) {
                 upbutton.setText("button clicked successfully!");
-                //draw an object
-                Paint paint = new Paint();
-                paint.setColor(Color.RED);
-                //testsurface.setPaint(paint);
-                // testsurface.drawSomething();
+
                 testsurface.drawMiddle();
                 //testsurface.drawBall();
 
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
         if(view.performClick()){
-            testsurface.drawMiddle();
+            //testsurface.drawMiddle();
             return true;
         }
 

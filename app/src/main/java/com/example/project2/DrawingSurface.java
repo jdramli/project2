@@ -37,18 +37,37 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         paint = null;
     }
-    public void drawEquation(){
+    public void drawEquation(float user_x){
         surfaceHolder = getHolder();
         Canvas canvas = surfaceHolder.lockCanvas();
         Paint surfaceBackground = new Paint();
         surfaceBackground.setColor(Color.LTGRAY);
         canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
         paint.setColor(Color.BLUE);
+        paint.setStrokeWidth(10);
         //canvas.drawLine(this.x,this.y,this.x+100,this.y+100,surfaceBackground);
         float startx = 0;
         float starty = m*startx + b;
-        float endx = this.makeRandX();
+        float endx = user_x;
         float endy = endx*m + b;
+
+        canvas.drawLine(startx,starty, endx,endy,paint);
+        surfaceHolder.unlockCanvasAndPost(canvas);
+
+    }
+    public void drawInverseEquation(float user_x){
+        surfaceHolder = getHolder();
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Paint surfaceBackground = new Paint();
+        surfaceBackground.setColor(Color.LTGRAY);
+        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
+        paint.setColor(Color.BLUE);
+        paint.setStrokeWidth(10);
+        //canvas.drawLine(this.x,this.y,this.x+100,this.y+100,surfaceBackground);
+        float startx = 0;
+        float starty = this.getHeight() - b;
+        float endx = user_x;
+        float endy = -m*endx - b;
 
         canvas.drawLine(startx,starty, endx,endy,paint);
         surfaceHolder.unlockCanvasAndPost(canvas);
@@ -60,12 +79,12 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         Canvas canvas = surfaceHolder.lockCanvas();
         Paint surfaceBackground = new Paint();
         //Set the surfaceview background color
-        surfaceBackground.setColor(Color.BLUE);
+        surfaceBackground.setColor(Color.DKGRAY);
         //Draw the surfacview background color
         canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
 
         //Draw the circle
-        paint.setColor(Color.YELLOW);
+        paint.setColor(Color.BLUE);
         //this.x = 200;
         //this.y = 200;
         canvas.drawCircle(this.x, this.y,100,paint);
@@ -103,7 +122,7 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
 
         //Draw the circle
-        paint.setColor(Color.YELLOW);
+        paint.setColor(Color.RED);
         canvas.drawCircle(x,y,100,paint);
 
         //Unlock the canvas object and post the new draw.
