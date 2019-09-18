@@ -1,10 +1,8 @@
 package com.example.project2;
 
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -21,11 +19,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("Just a Drawer");
+        setTitle("Line Seeker");
 
         //sets buttons and layout handle
-        final Button upbutton = findViewById((R.id.upbutton));
-        final Button downbutton = findViewById((R.id.downbutton));
+        final Button increase = findViewById((R.id.increase));
+        final Button rand = findViewById((R.id.rand));
+        final Button decrease = findViewById((R.id.decrease));
+        final Button power = findViewById((R.id.power));
         c_layout = (ConstraintLayout)findViewById(R.id.constraintLayout);
         testsurface = new DrawingSurface((getApplicationContext()));
         c_layout.addView(testsurface);
@@ -44,17 +44,17 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 //testsurface.setX(progress);
                 //testsurface.setY(progress);
                 //testsurface.drawRed();
-                //downbutton.setText("Position on Seekbar has changed!");
+                //rand.setText("Position on Seekbar has changed!");
                 float position = progress*10;
                 testsurface.drawEquation(position);
-                downbutton.setText("Equation from 0 to " + progress + " has been written");
+                //rand.setText("Equation from 0 to " + progress + " has been written");
                 //testsurface.drawInverseEquation(position);
 
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                //downbutton.setText("You started tracking on the seekbar!");
+                //rand.setText("You started tracking on the seekbar!");
                 //testsurface.randX();
                 //testsurface.randY();
                 //testsurface.drawMiddle();
@@ -65,28 +65,42 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
-                //downbutton.setText("SeekBar Tracking Stopped now!");
+                //rand.setText("SeekBar Tracking Stopped now!");
 
             }
         });
 
-        upbutton.setOnClickListener(new View.OnClickListener() {
+        increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                upbutton.setText("Click to increase power by 1, current power is: "+testsurface.getPower());
+               // increase.setText("Click to increase power by 1, current power is: "+testsurface.getPower());
+               // decrease.setText("Click to decrease power by 1, current power is: "+testsurface.getPower());
                 testsurface.increasePower();
+                power.setText("Power = "+testsurface.getPower());
                 //testsurface.drawMiddle();
                 //testsurface.drawBall();
 
             }
         });
-        downbutton.setOnClickListener(new View.OnClickListener(){
+        rand.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 testsurface.drawEquation(testsurface.makeRandX());
-                downbutton.setText("Equation 0 to random_number_x has been drawn! (Click again to redraw)");
+                //rand.setText("Equation 0 to random_number_x has been drawn! (Click again to redraw)");
             }
 
+        });
+        decrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              //  decrease.setText("Click to decrease power by 1, current power is: "+testsurface.getPower());
+              //  increase.setText("Click to increase power by 1, current power is: "+testsurface.getPower());
+                testsurface.decreasePower();
+                power.setText("Power = "+testsurface.getPower());
+                //testsurface.drawMiddle();
+                //testsurface.drawBall();
+
+            }
         });
 
     }

@@ -44,6 +44,8 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     public void increasePower(){
         this.power++;
     }
+    public void decreasePower() {this.power--;}
+    public void resetPower() {this.power = 1;}
     public void drawEquation(float user_x){
         surfaceHolder = getHolder();
         Canvas canvas = surfaceHolder.lockCanvas();
@@ -58,15 +60,15 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         float endx = user_x;
         float endy = (float) (Math.pow(endx,power)*m + b);
         canvas.drawLine(startx,starty, endx,endy,paint);
-
+        /*
         for(int i = 0; i < user_x; i++){
-            startx = i;
+            startx = startx + 5;
             starty = m*startx + b;
-            endx = i++;
+            endx = startx + 5;
             endy = (float) (Math.pow(endx,power)*m + b);
             paint.setColor(Color.YELLOW);
             canvas.drawLine(startx,starty, endx,endy,paint);
-        }
+        }*/
 
 
         surfaceHolder.unlockCanvasAndPost(canvas);
