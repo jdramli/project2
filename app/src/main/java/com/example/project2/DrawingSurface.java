@@ -20,6 +20,8 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     private int[][] equation = null;
     private int speed = 1; // might set the speed (which would look like sharpness of the curve, higher number should be lower curve?
 
+    //TODO: CONSIDER REFACTORING INTO A CIRCLE AND A SQUARE AND A LINE CLASS THAT EACH EXTEND SURFACEVIEW?
+
 
     public DrawingSurface(Context context){
         super(context);
@@ -158,6 +160,26 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
 
         //Unlock the canvas object and post the new draw.
         surfaceHolder.unlockCanvasAndPost(canvas);
+    }
+    public void drawBlueLine(float motion_x, float motion_y){
+        float startx = 0;
+        float starty = 0;
+        surfaceHolder = getHolder();
+        //Get and lock canvas object from surfaceHolder
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Paint surfaceBackground = new Paint();
+        //Set the surfaceview background color
+        surfaceBackground.setColor(Color.BLACK);
+        //Draw the surfacview background color
+        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
+
+        //Draw the circle
+        paint.setColor(Color.BLUE);
+        canvas.drawLine(startx,starty,motion_x,motion_y,paint);
+
+        //Unlock the canvas object and post the new draw.
+        surfaceHolder.unlockCanvasAndPost(canvas);
+
     }
     public void setX(float x){
         //Random float_rand = new Random();

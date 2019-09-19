@@ -131,8 +131,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             testsurface.setX(x);
             testsurface.setY(y);
             //testsurface.drawRed();
-            testsurface.drawYellow();
-
+            //testsurface.drawYellow();
+            testsurface.drawBlueLine(x,y);
 
 
 
