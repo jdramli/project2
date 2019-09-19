@@ -18,6 +18,7 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     private float b = 0;
     private int power = 1;
     private int[][] equation = null;
+    private int speed = 1; // might set the speed (which would look like sharpness of the curve, higher number should be lower curve?
 
 
     public DrawingSurface(Context context){
@@ -46,6 +47,11 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     }
     public void decreasePower() {this.power--;}
     public void resetPower() {this.power = 1;}
+    public void increaseSlope(){this.m++;}
+    public void decreaseSlope(){this.m--;}
+    public void resetSlope(){this.m = 1;}
+    public void setSlope(float m){this.m = m; }
+    public float getSlope(){return this.m;}
     public void drawEquation(float user_x){
         surfaceHolder = getHolder();
         Canvas canvas = surfaceHolder.lockCanvas();
@@ -57,18 +63,24 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         //canvas.drawLine(this.x,this.y,this.x+100,this.y+100,surfaceBackground);
         float startx = 0;
         float starty = m*startx + b;
-        float endx = user_x;
+        float endx = startx + speed;
         float endy = (float) (Math.pow(endx,power)*m + b);
         canvas.drawLine(startx,starty, endx,endy,paint);
-        /*
+        float temp_endx;
+        float temp_endy;
+
         for(int i = 0; i < user_x; i++){
-            startx = startx + 5;
-            starty = m*startx + b;
-            endx = startx + 5;
-            endy = (float) (Math.pow(endx,power)*m + b);
+            //startx = startx + 5;
+            //starty = m*startx + b;
+            //endx = startx + 5;
+            //endy = (float) (Math.pow(endx,power)*m + b);
+            temp_endx = endx + speed;
+            temp_endy = (float) (Math.pow(temp_endx,power)*m + b);
             paint.setColor(Color.YELLOW);
-            canvas.drawLine(startx,starty, endx,endy,paint);
-        }*/
+            canvas.drawLine(endx,endy, temp_endx,temp_endy,paint);
+            endx = temp_endx;
+            endy = temp_endy;
+        }
 
 
         surfaceHolder.unlockCanvasAndPost(canvas);
@@ -142,21 +154,21 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
 
         //Draw the circle
         paint.setColor(Color.RED);
-        canvas.drawCircle(x,y,100,paint);
+        canvas.drawCircle(this.x,this.y,100,paint);
 
         //Unlock the canvas object and post the new draw.
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
     public void setX(float x){
-        Random float_rand = new Random();
-        Random int_rand = new Random();
-        x = float_rand.nextFloat() + int_rand.nextInt(this.getWidth());
+        //Random float_rand = new Random();
+        //Random int_rand = new Random();
+        this.x = x;
     }
     public void setY(float y){
         //this.y = (float) (0.01 * y * this.getWidth());
-        Random float_rand = new Random();
-        Random int_rand = new Random();
-        y = float_rand.nextFloat() + int_rand.nextInt(this.getHeight());
+        //Random float_rand = new Random();
+        //Random int_rand = new Random();
+        this.y = y;
     }
 
     public void randX(){

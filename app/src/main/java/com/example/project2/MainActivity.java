@@ -1,8 +1,10 @@
 package com.example.project2;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -10,10 +12,16 @@ import android.widget.SeekBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
     DrawingSurface testsurface = null;
     ConstraintLayout c_layout = null;
     private SeekBar seekBar = null;
+    Button increase = null;
+    Button rand = null;
+    Button decrease = null;
+    Button power = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,17 +30,17 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         setTitle("Line Seeker");
 
         //sets buttons and layout handle
-        final Button increase = findViewById((R.id.increase));
-        final Button rand = findViewById((R.id.rand));
-        final Button decrease = findViewById((R.id.decrease));
-        final Button power = findViewById((R.id.power));
+        increase = findViewById((R.id.increase));
+        rand = findViewById((R.id.rand));
+        decrease = findViewById((R.id.decrease));
+        power = findViewById((R.id.power));
         c_layout = (ConstraintLayout)findViewById(R.id.constraintLayout);
         testsurface = new DrawingSurface((getApplicationContext()));
         c_layout.addView(testsurface);
         c_layout.setBackgroundColor(Color.GRAY);
         //testsurface.setBackgroundColor(Color.WHITE);
         //testsurface.getHolder().setFixedSize(900,900);
-        //testsurface.setOnTouchListener(this);
+        testsurface.setOnTouchListener(this);
         //setContentView(testsurface);
 
         // testsurface.drawSomething();
@@ -75,8 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             public void onClick(View view) {
                // increase.setText("Click to increase power by 1, current power is: "+testsurface.getPower());
                // decrease.setText("Click to decrease power by 1, current power is: "+testsurface.getPower());
-                testsurface.increasePower();
-                power.setText("Power = "+testsurface.getPower());
+                testsurface.increaseSlope();
+                power.setText("Slope = "+testsurface.getSlope());
                 //testsurface.drawMiddle();
                 //testsurface.drawBall();
 
@@ -85,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         rand.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                Random temp_rand = new Random();
+                testsurface.setSlope(temp_rand.nextInt(10) + temp_rand.nextFloat());
                 testsurface.drawEquation(testsurface.makeRandX());
                 //rand.setText("Equation 0 to random_number_x has been drawn! (Click again to redraw)");
             }
@@ -95,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             public void onClick(View view) {
               //  decrease.setText("Click to decrease power by 1, current power is: "+testsurface.getPower());
               //  increase.setText("Click to increase power by 1, current power is: "+testsurface.getPower());
-                testsurface.decreasePower();
-                power.setText("Power = "+testsurface.getPower());
+                testsurface.decreaseSlope();
+                power.setText("Slope = "+testsurface.getSlope());
                 //testsurface.drawMiddle();
                 //testsurface.drawBall();
 
@@ -105,17 +115,34 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     }
 
+
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
-        if(view.performClick()){
-            //testsurface.drawMiddle();
-            return true;
-        }
+        // If user touch the custom SurfaceView object.
+        if(view instanceof SurfaceView) {
+            view.invalidate();
 
-        else{
+            float x = motionEvent.getX();
+
+            float y = motionEvent.getY();
+
+
+            testsurface.setX(x);
+            testsurface.setY(y);
+            //testsurface.drawRed();
+            testsurface.drawYellow();
+
+
+
+
+            // Tell android os the onTouch event has been processed.
+            return true;
+        }else
+        {
+            // Tell android os the onTouch event has not been processed.
             return false;
         }
-
     }
+
 }
