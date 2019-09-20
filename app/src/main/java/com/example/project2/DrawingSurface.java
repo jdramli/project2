@@ -53,11 +53,14 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     }
     public void decreasePower() {this.power--;}
     public void resetPower() {this.power = 1;}
-    public void increaseSlope(){this.m++;}
-    public void decreaseSlope(){this.m--;}
+    public void increaseSlope(){this.m = (float) (this.m + 0.1);}
+    public void decreaseSlope(){this.m = (float) (this.m - 0.1);}
     public void resetSlope(){this.m = 1;}
     public void setSlope(float m){this.m = m; }
     public float getSlope(){return this.m;}
+    public void setY_int(float b){ this.b =b; }
+    public void resetY_int(){this.b = 0; }
+    public float getY_int(){return this.b; }
 
     public void drawGridLine(float x1, float y1, float x2, float y2){
         surfaceHolder = getHolder();
@@ -70,6 +73,42 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         //canvas.drawLine(this.x,this.y,this.x+100,this.y+100,surfaceBackground);
 
         canvas.drawLine(x1,y1,x2,y2,paint);
+        surfaceHolder.unlockCanvasAndPost(canvas);
+
+    }
+    public void drawLineOnClicks(float user_x_start, float user_y_start, float user_x_end, float user_y_end){
+        surfaceHolder = getHolder();
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Paint surfaceBackground = new Paint();
+        surfaceBackground.setColor(Color.LTGRAY);
+        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
+        paint.setColor(Color.RED);
+        paint.setStrokeWidth(10);
+        //TODO: FIND A WAY TO CAPTURE THE 4 NECESSARY INPUTS ABOVE AND CALL THIS FUNCTION EFFECTIVELY IN MAIN
+        canvas.drawLine(user_x_start, user_y_start, user_x_end, user_y_end, paint);
+
+
+
+        surfaceHolder.unlockCanvasAndPost(canvas);
+
+    }
+    public void drawSimpleEquation(float user_x){
+        surfaceHolder = getHolder();
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Paint surfaceBackground = new Paint();
+        surfaceBackground.setColor(Color.LTGRAY);
+        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
+        paint.setColor(Color.YELLOW);
+        paint.setStrokeWidth(10);
+        //canvas.drawLine(this.x,this.y,this.x+100,this.y+100,surfaceBackground);
+        float startx = 0;
+        float starty = m*startx + b;
+        float endx = user_x;
+        float endy = m*endx + b;
+        canvas.drawLine(startx,starty, endx,endy,paint);
+
+
+
         surfaceHolder.unlockCanvasAndPost(canvas);
 
     }
@@ -183,7 +222,7 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     }
     public void drawBlueLine(float motion_x, float motion_y){
         float startx = 0;
-        float starty = 0;
+        float starty = b;
         surfaceHolder = getHolder();
         //Get and lock canvas object from surfaceHolder
         Canvas canvas = surfaceHolder.lockCanvas();

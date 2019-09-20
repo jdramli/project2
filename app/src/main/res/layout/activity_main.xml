@@ -21,15 +21,15 @@ tools:context=".MainActivity">
 
         <Button
             android:id="@+id/increase"
-            android:layout_width="70dp"
-            android:layout_height="59dp"
+            android:layout_width="71dp"
+            android:layout_height="37dp"
             android:text="+"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.995"
+            app:layout_constraintVertical_bias="0.942"
             tools:layout_conversion_absoluteHeight="48dp"
             tools:layout_conversion_absoluteWidth="206dp" />
 
@@ -40,7 +40,7 @@ tools:context=".MainActivity">
             android:text="Rand"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.91"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekBar"
             app:layout_constraintVertical_bias="0.995"
@@ -60,27 +60,41 @@ tools:context=".MainActivity">
 
         <Button
             android:id="@+id/decrease"
-            android:layout_width="67dp"
-            android:layout_height="59dp"
+            android:layout_width="71dp"
+            android:layout_height="37dp"
             android:text="-"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.203"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.995" />
+            app:layout_constraintVertical_bias="0.995"
+            tools:layout_conversion_absoluteHeight="48dp"
+            tools:layout_conversion_absoluteWidth="206dp"/>
 
         <Button
             android:id="@+id/slope"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Slope = 1"
+            android:text="Click to reset: Slope = 1.0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.582"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/seekBar"
             app:layout_constraintVertical_bias="0.995" />
+
+        <Button
+            android:id="@+id/yint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click to reset: Y_Int = 0.0"
+            app:layout_constraintBottom_toBottomOf="@+id/slope"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.929" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

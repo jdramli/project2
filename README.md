@@ -33,4 +33,12 @@ drawing the blue line from the user-click (the slope that is set in the DrawingS
 right corner of the app screen that will generate a random slope and random x and y coordinates as an enpoint to draw a line.  This is done in 
 yellow as well, and that line can then be adjusted by the seekbar as well (because the seekbar is just using the slope and the b value). 
 
-Next step is to add a "b" value to the Rand line and maybe a "b" adjustment button as well to the app screen.
+Next step is to add a "b" value to the Rand line and maybe a "b" adjustment button as well to the app screen.  Also, speed parameter was experimented with
+in the "drawEquation" method that was used to draw the yellow lines with the seekbar and "Rand", and this may be removed for clarity.  Much code
+may need to be deleted as these programs were written to gain familiarity and understanding with many android studio SurfaceView and listener functions.
+
+Speed option has been moved to separate function called "drawEquation", and simple y = mx+b non-exponential and only using two coordinate pairs is
+now implemented as function "drawSimpleEquation".  Plus and minus buttons on the app-screen will adjust the slope by 0.1, allowing for small and
+more more aesthetically pleasing adjustments in line angle.  Next step is to maybe add a button to increase or decrease "b", or maybe create a way
+to invoke the method "drawLineOnClicks" which would hopefully get the X and Y coordinate pairs of a start-click and an end-click as the basis for
+drawing a line on screen.
