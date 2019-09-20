@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     Button increase = null;
     Button rand = null;
     Button decrease = null;
-    Button power = null;
+    Button slope = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         increase = findViewById((R.id.increase));
         rand = findViewById((R.id.rand));
         decrease = findViewById((R.id.decrease));
-        power = findViewById((R.id.power));
+        slope = findViewById((R.id.slope));
         c_layout = (ConstraintLayout)findViewById(R.id.constraintLayout);
         testsurface = new DrawingSurface((getApplicationContext()));
         c_layout.addView(testsurface);
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                // increase.setText("Click to increase power by 1, current power is: "+testsurface.getPower());
                // decrease.setText("Click to decrease power by 1, current power is: "+testsurface.getPower());
                 testsurface.increaseSlope();
-                power.setText("Slope = "+testsurface.getSlope());
+                slope.setText("Slope = "+testsurface.getSlope());
                 //testsurface.drawMiddle();
                 //testsurface.drawBall();
 
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             public void onClick(View view){
                 Random temp_rand = new Random();
                 testsurface.setSlope(temp_rand.nextInt(10) + temp_rand.nextFloat());
+                slope.setText("Slope = " +testsurface.getSlope());
                 testsurface.drawEquation(testsurface.makeRandX());
                 //rand.setText("Equation 0 to random_number_x has been drawn! (Click again to redraw)");
             }
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
               //  decrease.setText("Click to decrease power by 1, current power is: "+testsurface.getPower());
               //  increase.setText("Click to increase power by 1, current power is: "+testsurface.getPower());
                 testsurface.decreaseSlope();
-                power.setText("Slope = "+testsurface.getSlope());
+                slope.setText("Slope = "+testsurface.getSlope());
                 //testsurface.drawMiddle();
                 //testsurface.drawBall();
 
@@ -133,6 +134,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             //testsurface.drawRed();
             //testsurface.drawYellow();
             testsurface.drawBlueLine(x,y);
+            float temp_m = (y-0)/(x-0);
+            testsurface.setSlope(temp_m);
+            slope.setText("Slope = "+temp_m);
 
 
 

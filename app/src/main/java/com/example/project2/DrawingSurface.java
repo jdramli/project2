@@ -27,6 +27,10 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         super(context);
         paint = new Paint();
         paint.setColor(Color.YELLOW);
+        //this.setBackgroundColor(Color.LTGRAY);
+        for(int i = 0; i < this.getHeight(); i=i+5){
+            drawGridLine(0,i,this.getWidth(),i);
+        }
     }
 
     @Override
@@ -54,6 +58,22 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     public void resetSlope(){this.m = 1;}
     public void setSlope(float m){this.m = m; }
     public float getSlope(){return this.m;}
+
+    public void drawGridLine(float x1, float y1, float x2, float y2){
+        surfaceHolder = getHolder();
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Paint surfaceBackground = new Paint();
+        surfaceBackground.setColor(Color.LTGRAY);
+        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
+        paint.setColor(Color.RED);
+        paint.setStrokeWidth(2);
+        //canvas.drawLine(this.x,this.y,this.x+100,this.y+100,surfaceBackground);
+
+        canvas.drawLine(x1,y1,x2,y2,paint);
+        surfaceHolder.unlockCanvasAndPost(canvas);
+
+    }
+
     public void drawEquation(float user_x){
         surfaceHolder = getHolder();
         Canvas canvas = surfaceHolder.lockCanvas();
@@ -169,7 +189,7 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         Canvas canvas = surfaceHolder.lockCanvas();
         Paint surfaceBackground = new Paint();
         //Set the surfaceview background color
-        surfaceBackground.setColor(Color.BLACK);
+        surfaceBackground.setColor(Color.LTGRAY);
         //Draw the surfacview background color
         canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
 

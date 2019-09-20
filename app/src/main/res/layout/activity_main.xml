@@ -35,8 +35,8 @@ tools:context=".MainActivity">
 
         <Button
             android:id="@+id/rand"
-            android:layout_width="64dp"
-            android:layout_height="34dp"
+            android:layout_width="69dp"
+            android:layout_height="60dp"
             android:text="Rand"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,18 +65,19 @@ tools:context=".MainActivity">
             android:text="-"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.232"
+            app:layout_constraintHorizontal_bias="0.203"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.995" />
 
         <Button
-            android:id="@+id/power"
+            android:id="@+id/slope"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Power = 1"
+            android:text="Slope = 1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.582"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/seekBar"
             app:layout_constraintVertical_bias="0.995" />
