@@ -38,11 +38,15 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         yint = findViewById(R.id.yint);
         c_layout = (ConstraintLayout)findViewById(R.id.constraintLayout);
         testsurface = new DrawingSurface((getApplicationContext()));
+
         c_layout.addView(testsurface);
         c_layout.setBackgroundColor(Color.GRAY);
+        testsurface.setWillNotDraw(false); // This and overriding the onDraw method in the class allows whatever is in onDraw to start instead
+                                            //of just a black screen.
         //testsurface.setBackgroundColor(Color.WHITE);
         //testsurface.getHolder().setFixedSize(900,900);
         testsurface.setOnTouchListener(this);
+
         //setContentView(testsurface);
 
         // testsurface.drawSomething();
@@ -59,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 testsurface.drawSimpleEquation(position);
                 //rand.setText("Equation from 0 to " + progress + " has been written");
                 //testsurface.drawInverseEquation(position);
+
 
             }
 
@@ -78,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 //rand.setText("SeekBar Tracking Stopped now!");
 
             }
+
         });
 
         increase.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +154,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
             float y = motionEvent.getY();
 
-
+            //for(int i = 0; i < testsurface.getHeight(); i= i + 5){
+            //    testsurface.drawGridLine(0,i,testsurface.getWidth(),i);
+           // }
             testsurface.setX(x);
             testsurface.setY(y);
             //testsurface.drawRed();

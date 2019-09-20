@@ -23,16 +23,30 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     //TODO: CONSIDER REFACTORING INTO A CIRCLE AND A SQUARE AND A LINE CLASS THAT EACH EXTEND SURFACEVIEW?
 
 
-    public DrawingSurface(Context context){
+    public DrawingSurface(Context context){ //THIS IS THE BACKEND CREATOR PART THAT WILL SET THE SURFACE AND DO THINGS BEFORE OUTPUT TO SCREEN
         super(context);
         paint = new Paint();
         paint.setColor(Color.YELLOW);
         //this.setBackgroundColor(Color.LTGRAY);
-        for(int i = 0; i < this.getHeight(); i=i+5){
-            drawGridLine(0,i,this.getWidth(),i);
-        }
+
     }
 
+    //
+    @Override
+    public void onDraw(Canvas canvas){ //THIS IS BASICALLY THE FRONT-END CREATOR PART THAT SAYS WHAT TO DO WHEN THE VIEW IS DRAWN FOR THE FIRST TIME
+        Paint paint = new Paint();
+        paint.setColor(Color.GREEN);
+        canvas.drawLine(50,50, 250,250,paint);
+
+        Paint gridlinecolor = new Paint();
+        gridlinecolor.setColor(Color.RED);
+        for(int i = 0; i < this.getHeight(); i= i + 50){
+            canvas.drawLine(0,i,this.getWidth(),i,gridlinecolor);
+        }
+        for(int i = 0; i < this.getWidth(); i= i + 50){
+            canvas.drawLine(i,0,i,this.getHeight(),gridlinecolor);
+        }
+    }
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
 
@@ -106,6 +120,14 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         float endx = user_x;
         float endy = m*endx + b;
         canvas.drawLine(startx,starty, endx,endy,paint);
+        Paint gridlinecolor = new Paint();
+        gridlinecolor.setColor(Color.RED);
+        for(int i = 0; i < this.getHeight(); i= i + 50){
+            canvas.drawLine(0,i,this.getWidth(),i,gridlinecolor);
+        }
+        for(int i = 0; i < this.getWidth(); i= i + 50){
+            canvas.drawLine(i,0,i,this.getHeight(),gridlinecolor);
+        }
 
 
 
@@ -235,6 +257,17 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         //Draw the circle
         paint.setColor(Color.BLUE);
         canvas.drawLine(startx,starty,motion_x,motion_y,paint);
+        Paint gridlinecolor = new Paint();
+        gridlinecolor.setColor(Color.RED);
+        for(int i = 0; i < this.getHeight(); i= i + 50){
+            canvas.drawLine(0,i,this.getWidth(),i,gridlinecolor);
+        }
+        for(int i = 0; i < this.getWidth(); i= i + 50){
+            canvas.drawLine(i,0,i,this.getHeight(),gridlinecolor);
+        }
+        //for(int i = 0; i < this.getWidth(); i= i + 50){
+        //    canvas.drawLine(i,0,this.getHeight(),i,gridlinecolor);
+        //}
 
         //Unlock the canvas object and post the new draw.
         surfaceHolder.unlockCanvasAndPost(canvas);
