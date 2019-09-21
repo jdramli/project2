@@ -3,6 +3,7 @@ package com.example.project2;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
@@ -14,7 +15,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
+import static java.lang.Float.NaN;
+
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener {
     DrawingSurface testsurface = null;
     ConstraintLayout c_layout = null;
     private SeekBar seekBar = null;
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("Line Seeker");
+        setTitle("Seekbar extends Rand.");
 
         //sets buttons and layout handle
         increase = findViewById((R.id.increase));
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         //testsurface.setBackgroundColor(Color.WHITE);
         //testsurface.getHolder().setFixedSize(900,900);
         testsurface.setOnTouchListener(this);
+        testsurface.setOnDragListener(this);
 
         //setContentView(testsurface);
 
@@ -73,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 //testsurface.randX();
                 //testsurface.randY();
                 //testsurface.drawMiddle();
-
 
             }
 
@@ -106,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 testsurface.setY_int(temp_rand.nextInt(testsurface.getWidth()));
                 slope.setText("Click to reset: Slope = " +testsurface.getSlope());
                 yint.setText("Click to reset: Y_Int = "+testsurface.getY_int());
+
+                //testsurface.drawInverseSimpleEquation(testsurface.makeRandX());
                 testsurface.drawSimpleEquation(testsurface.makeRandX());
                 //rand.setText("Equation 0 to random_number_x has been drawn! (Click again to redraw)");
             }
@@ -137,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             public void onClick(View view) {
                 testsurface.resetY_int();
                 yint.setText("Click to reset: Y_Int = "+testsurface.getY_int());
+                //testsurface.redrawSimpleEquation();
             }
         });
 
@@ -162,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             //testsurface.drawRed();
             //testsurface.drawYellow();
             testsurface.drawBlueLine(x,y);
-            float temp_m = (y-0)/(x-0);
+            float temp_m = (y-testsurface.getY())/(x-testsurface.getX());
             testsurface.setSlope(temp_m);
             slope.setText("Click to reset: Slope = "+temp_m);
 
@@ -177,4 +183,17 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         }
     }
 
+    @Override
+    public boolean onDrag(View view, DragEvent dragEvent) {
+        if(view instanceof SurfaceView){
+            view.invalidate();
+            if(dragEvent.getAction() == DragEvent.ACTION_DRAG_ENTERED){
+                slope.setText("NOW THAT WAS A CLICK AND DRAG!");
+                return true;
+            }
+
+        }
+
+        return false;
+    }
 }

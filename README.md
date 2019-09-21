@@ -42,3 +42,6 @@ now implemented as function "drawSimpleEquation".  Plus and minus buttons on the
 more more aesthetically pleasing adjustments in line angle.  Next step is to maybe add a button to increase or decrease "b", or maybe create a way
 to invoke the method "drawLineOnClicks" which would hopefully get the X and Y coordinate pairs of a start-click and an end-click as the basis for
 drawing a line on screen.
+
+Some adjustments have been made to indicate that the buttons on-screen work with the Seekbar, whereas just clicking on the canvas activates a 
+separate "draw a line from 0,0 to the pointer's x,y location" function.
