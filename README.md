@@ -45,3 +45,15 @@ drawing a line on screen.
 
 Some adjustments have been made to indicate that the buttons on-screen work with the Seekbar, whereas just clicking on the canvas activates a 
 separate "draw a line from 0,0 to the pointer's x,y location" function.
+
+There are a significant amount of dormant functions in the code, some of which draw temporary squiggle shapes, and some which try to invert or 
+manipulate shapes and lines.  Ultimately, a lot of these are not implemented in the final version due to remaining bugs or incompatibilty with
+current design.
+
+The final stage before submitting the project involved adding instructions to the layout, and making three distinct functions on screen.
+Many of the functions used in testing are dormant in the code, only using ones to populate the 3 basic line drawing options.  The first option
+is to simply click the screen and watch a blue line be drawn from the 0,0 start location to the cursor's location.  The second option is to use the
+Seekbar which will generate a random startpoint on seekBegin, and will extend the line from that startpoint toward the progress bar's X location.
+The final option, is to click the Rand button to generate a two random points based on a random slope and y_intercept between which 
+a green line will be drawn. Also, the plus and minus buttons on the left will adjust the slope and affect the seekbar behavior as that is dependent
+on the slope setting.

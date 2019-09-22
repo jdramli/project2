@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("Seekbar extends Rand.");
+        setTitle("Random Draws");
 
         //sets buttons and layout handle
         increase = findViewById((R.id.increase));
