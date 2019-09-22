@@ -3,6 +3,7 @@ package com.example.project2;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         testsurface.setOnTouchListener(this);
         testsurface.setOnDragListener(this);
 
+
         //setContentView(testsurface);
 
         // testsurface.drawSomething();
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 //testsurface.drawRed();
                 //rand.setText("Position on Seekbar has changed!");
                 float position = progress*10;
-                testsurface.drawSimpleEquation(position);
+                testsurface.redrawSimpleEquation(position );
                 //rand.setText("Equation from 0 to " + progress + " has been written");
                 //testsurface.drawInverseEquation(position);
 
@@ -77,14 +79,36 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 //testsurface.randX();
                 //testsurface.randY();
                 //testsurface.drawMiddle();
+                testsurface.setX(testsurface.makeRandX());
+                testsurface.setY(testsurface.makeRandY());
 
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                //testsurface.initShapeVertices();
+                /*
+                //This block of code can be used to make a disappearing quickly animated shape with random vertices
+                float tempx1 = testsurface.makeRandX();
+                float tempy1 = testsurface.makeRandY();
+                float tempx2 = testsurface.makeRandX();
+                float tempy2 = testsurface.makeRandY();
+                for(int i = 0; i < 10; i++){
+                    //testsurface.drawBlueLine((float)testsurface.shape_vertices[i].first,(float)testsurface.shape_vertices[i].second);
 
-                //rand.setText("SeekBar Tracking Stopped now!");
+                    if(i % 2 == 0){
+                        testsurface.drawLineTwoPoints(tempx1,tempy1,tempx2,tempy2);
+                        tempx1 = testsurface.makeRandX();
+                        tempy1 = testsurface.makeRandY();
+                    }
+                    else{
+                        testsurface.drawLineTwoPoints(tempx2,tempy2,tempx1,tempy1);
+                        tempx2 = testsurface.makeRandX();
+                        tempy2 = testsurface.makeRandY();
+                    }
 
+                }
+                */
             }
 
         });
@@ -111,7 +135,15 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 yint.setText("Click to reset: Y_Int = "+testsurface.getY_int());
 
                 //testsurface.drawInverseSimpleEquation(testsurface.makeRandX());
-                testsurface.drawSimpleEquation(testsurface.makeRandX());
+                Random flip = new Random();
+                if(flip.nextInt()%2 == 0){
+                    testsurface.drawSimpleEquation(testsurface.makeRandX());
+
+                }
+                else{
+                    testsurface.drawInverseSimpleEquation(testsurface.makeRandX());
+                }
+
                 //rand.setText("Equation 0 to random_number_x has been drawn! (Click again to redraw)");
             }
 
@@ -153,16 +185,18 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
         // If user touch the custom SurfaceView object.
+        //if(view instanceof SurfaceView && motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
         if(view instanceof SurfaceView) {
-            view.invalidate();
 
+            view.invalidate();
+            if(view instanceof SurfaceView && motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+
+            }
+            testsurface.drawBlueLine(motionEvent.getX(),motionEvent.getY());
             float x = motionEvent.getX();
 
             float y = motionEvent.getY();
 
-            //for(int i = 0; i < testsurface.getHeight(); i= i + 5){
-            //    testsurface.drawGridLine(0,i,testsurface.getWidth(),i);
-           // }
             testsurface.setX(x);
             testsurface.setY(y);
             //testsurface.drawRed();
@@ -173,10 +207,19 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             slope.setText("Click to reset: Slope = "+temp_m);
 
 
+            if(view instanceof SurfaceView && motionEvent.getAction() == MotionEvent.ACTION_UP){
+                //testsurface.drawBlueLine(motionEvent.getX(),motionEvent.getY());
+                testsurface.drawBlueLine(x,y);
+                //testsurface.drawYellowLine(x,y); //draws a Yellow line opposite the blue line
+            }
+
+
 
             // Tell android os the onTouch event has been processed.
             return true;
-        }else
+        }
+
+        else
         {
             // Tell android os the onTouch event has not been processed.
             return false;
@@ -185,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     @Override
     public boolean onDrag(View view, DragEvent dragEvent) {
+        //TODO: SEE IF YOU CAN MAKE THIS ONDRAG LISTENER DO ANYTHING AT ALL
         if(view instanceof SurfaceView){
             view.invalidate();
             if(dragEvent.getAction() == DragEvent.ACTION_DRAG_ENTERED){

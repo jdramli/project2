@@ -4,8 +4,14 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Pair;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.lang.Math;
 
@@ -19,6 +25,10 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     private int power = 1;
     private int[][] equation = null;
     private int speed = 1; // might set the speed (which would look like sharpness of the curve, higher number should be lower curve?
+    public Map<Float, Float> shape_vertices = new HashMap<>();
+    private int shape_index = 0;
+
+
 
     //TODO: CONSIDER REFACTORING INTO A CIRCLE AND A SQUARE AND A LINE CLASS THAT EACH EXTEND SURFACEVIEW?
 
@@ -28,6 +38,11 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         paint = new Paint();
         paint.setColor(Color.YELLOW);
         //this.setBackgroundColor(Color.LTGRAY);
+        //Random vertex = new Random();
+        //for(int i = 0; i < 50; i++){
+        //    this.shape_vertices[shape_index] = new Pair( vertex.nextInt(this.getWidth()),vertex.nextInt(this.getHeight()) );
+        //    this.shape_index++;
+        //}
 
     }
 
@@ -78,6 +93,14 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
 
     public float getX(){return this.x;}
     public float getY(){return this.y;}
+    public void initShapeVertices(){
+        Random vertex = new Random();
+        for(int i = 0; i < 50; i++){
+            this.shape_vertices.put((float)vertex.nextInt(this.getWidth())+vertex.nextFloat(),(float)vertex.nextInt(this.getHeight())+vertex.nextFloat());
+            this.shape_index++;
+        }
+
+    }
 /*
     public void drawGridLine(float x1, float y1, float x2, float y2){
         surfaceHolder = getHolder();
@@ -93,13 +116,16 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
 */
-    public void drawLineOnClicks(float user_x_start, float user_y_start, float user_x_end, float user_y_end){
+    public void drawUserShape(){
+
+    }
+    public void drawLineTwoPoints(float user_x_start, float user_y_start, float user_x_end, float user_y_end){
         surfaceHolder = getHolder();
         Canvas canvas = surfaceHolder.lockCanvas();
         Paint surfaceBackground = new Paint();
         surfaceBackground.setColor(Color.LTGRAY);
         canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
-        paint.setColor(Color.RED);
+        paint.setColor(Color.BLACK);
         paint.setStrokeWidth(10);
         //TODO: FIND A WAY TO CAPTURE THE 4 NECESSARY INPUTS ABOVE AND CALL THIS FUNCTION EFFECTIVELY IN MAIN
         canvas.drawLine(user_x_start, user_y_start, user_x_end, user_y_end, paint);
@@ -109,22 +135,22 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         surfaceHolder.unlockCanvasAndPost(canvas);
 
     }
-    public void redrawSimpleEquation(){
+    public void drawBlueLine(float motion_x, float motion_y){
+        float startx = 0;
+        float starty = b;
         surfaceHolder = getHolder();
+        //Get and lock canvas object from surfaceHolder
         Canvas canvas = surfaceHolder.lockCanvas();
         Paint surfaceBackground = new Paint();
+        //Set the surfaceview background color
         surfaceBackground.setColor(Color.LTGRAY);
+        //Draw the surfacview background color
         canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
-        paint.setColor(Color.YELLOW);
+
+        //Draw the circle
+        paint.setColor(Color.BLUE);
         paint.setStrokeWidth(10);
-        //canvas.drawLine(this.x,this.y,this.x+100,this.y+100,surfaceBackground);
-        float startx = 0;
-        float starty = m*startx + b;
-        float endx = this.x;
-        float endy = m*endx + b;
-        canvas.drawLine(startx,starty, endx,endy,paint);
-        this.x = endx;
-        //this.y = endy;
+        canvas.drawLine(startx,starty,motion_x,motion_y,paint);
         Paint gridlinecolor = new Paint();
         gridlinecolor.setColor(Color.RED);
         for(int i = 0; i < this.getHeight(); i= i + 50){
@@ -133,20 +159,57 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         for(int i = 0; i < this.getWidth(); i= i + 50){
             canvas.drawLine(i,0,i,this.getHeight(),gridlinecolor);
         }
+        //for(int i = 0; i < this.getWidth(); i= i + 50){
+        //    canvas.drawLine(i,0,this.getHeight(),i,gridlinecolor);
+        //}
 
+        //Unlock the canvas object and post the new draw.
         surfaceHolder.unlockCanvasAndPost(canvas);
 
     }
+    public void drawYellowLine(float motion_x, float motion_y){
+        float startx = this.getWidth();
+        float starty = b;
+        surfaceHolder = getHolder();
+        //Get and lock canvas object from surfaceHolder
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Paint surfaceBackground = new Paint();
+        //Set the surfaceview background color
+        surfaceBackground.setColor(Color.LTGRAY);
+        //Draw the surfacview background color
+        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
+
+        //Draw the circle
+        paint.setColor(Color.YELLOW);
+        paint.setStrokeWidth(10);
+        canvas.drawLine(startx,starty,motion_x,motion_y,paint);
+        Paint gridlinecolor = new Paint();
+        gridlinecolor.setColor(Color.RED);
+        for(int i = 0; i < this.getHeight(); i= i + 50){
+            canvas.drawLine(0,i,this.getWidth(),i,gridlinecolor);
+        }
+        for(int i = 0; i < this.getWidth(); i= i + 50){
+            canvas.drawLine(i,0,i,this.getHeight(),gridlinecolor);
+        }
+        //for(int i = 0; i < this.getWidth(); i= i + 50){
+        //    canvas.drawLine(i,0,this.getHeight(),i,gridlinecolor);
+        //}
+
+        //Unlock the canvas object and post the new draw.
+        surfaceHolder.unlockCanvasAndPost(canvas);
+
+    }
+
     public void drawSimpleEquation(float user_x){
         surfaceHolder = getHolder();
         Canvas canvas = surfaceHolder.lockCanvas();
         Paint surfaceBackground = new Paint();
         surfaceBackground.setColor(Color.LTGRAY);
         canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
-        paint.setColor(Color.YELLOW);
+        paint.setColor(Color.GREEN);
         paint.setStrokeWidth(10);
         //canvas.drawLine(this.x,this.y,this.x+100,this.y+100,surfaceBackground);
-        float startx = 0;
+        float startx = makeRandX();
         float starty = startx + b; //m*startx + b;
         float endx = user_x;
         float endy = m*endx + b;
@@ -164,6 +227,34 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
 
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
+    public void redrawSimpleEquation(float user_x){
+        surfaceHolder = getHolder();
+        Canvas canvas = surfaceHolder.lockCanvas();
+        Paint surfaceBackground = new Paint();
+        surfaceBackground.setColor(Color.LTGRAY);
+        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
+        paint.setColor(Color.YELLOW);
+        paint.setStrokeWidth(10);
+        //canvas.drawLine(this.x,this.y,this.x+100,this.y+100,surfaceBackground);
+
+        float startx = this.x;
+        float starty = startx + b;
+        float endx = user_x;
+        float endy = m*endx + b;
+        canvas.drawLine(startx,starty, endx,endy,paint);
+
+        Paint gridlinecolor = new Paint();
+        gridlinecolor.setColor(Color.RED);
+        for(int i = 0; i < this.getHeight(); i= i + 50){
+            canvas.drawLine(0,i,this.getWidth(),i,gridlinecolor);
+        }
+        for(int i = 0; i < this.getWidth(); i= i + 50){
+            canvas.drawLine(i,0,i,this.getHeight(),gridlinecolor);
+        }
+
+        surfaceHolder.unlockCanvasAndPost(canvas);
+
+    }
     public void drawInverseSimpleEquation(float user_x){
         surfaceHolder = getHolder();
         Canvas canvas = surfaceHolder.lockCanvas();
@@ -173,7 +264,7 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         paint.setColor(Color.GREEN);
         paint.setStrokeWidth(10);
         //canvas.drawLine(this.x,this.y,this.x+100,this.y+100,surfaceBackground);
-        float startx = 0;
+        float startx = makeRandX();
         float starty = this.getHeight() - b;
         float endx = user_x;
         float endy = -(m*endx + b);
@@ -273,38 +364,7 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         //Unlock the canvas object and post the new draw.
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
-    public void drawBlueLine(float motion_x, float motion_y){
-        float startx = 0;
-        float starty = b;
-        surfaceHolder = getHolder();
-        //Get and lock canvas object from surfaceHolder
-        Canvas canvas = surfaceHolder.lockCanvas();
-        Paint surfaceBackground = new Paint();
-        //Set the surfaceview background color
-        surfaceBackground.setColor(Color.LTGRAY);
-        //Draw the surfacview background color
-        canvas.drawRect(0,0,this.getWidth(),this.getHeight(),surfaceBackground);
 
-        //Draw the circle
-        paint.setColor(Color.BLUE);
-        paint.setStrokeWidth(10);
-        canvas.drawLine(startx,starty,motion_x,motion_y,paint);
-        Paint gridlinecolor = new Paint();
-        gridlinecolor.setColor(Color.RED);
-        for(int i = 0; i < this.getHeight(); i= i + 50){
-            canvas.drawLine(0,i,this.getWidth(),i,gridlinecolor);
-        }
-        for(int i = 0; i < this.getWidth(); i= i + 50){
-            canvas.drawLine(i,0,i,this.getHeight(),gridlinecolor);
-        }
-        //for(int i = 0; i < this.getWidth(); i= i + 50){
-        //    canvas.drawLine(i,0,this.getHeight(),i,gridlinecolor);
-        //}
-
-        //Unlock the canvas object and post the new draw.
-        surfaceHolder.unlockCanvasAndPost(canvas);
-
-    }
     public void setX(float x){
         //Random float_rand = new Random();
         //Random int_rand = new Random();
